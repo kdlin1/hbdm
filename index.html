@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>С днём рождения, мамочка!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Marck+Script&display=swap&subset=cyrillic"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fbe9ee;
+      --bg2: #f6d3dd;
+      --ink: #3b1230;
+      --muted: #7a4a68;
+      --hot: #b0123f;
+      --gold: #b87a00;
+      --card: #fff8fa;
+      --sh: rgba(90, 20, 60, .22);
+      --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+      --hand: 'Marck Script', 'Segoe Script', cursive;
+      --sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      color-scheme: light
+    }
+
+    @media (prefers-color-scheme:dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #1b0a1e;
+        --bg2: #32112f;
+        --ink: #ffe9d2;
+        --muted: #e3b4c6;
+        --hot: #ff5c85;
+        --gold: #ffc857;
+        --card: #2b1229;
+        --sh: rgba(0, 0, 0, .5);
+        color-scheme: dark
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #1b0a1e;
+      --bg2: #32112f;
+      --ink: #ffe9d2;
+      --muted: #e3b4c6;
+      --hot: #ff5c85;
+      --gold: #ffc857;
+      --card: #2b1229;
+      --sh: rgba(0, 0, 0, .5);
+      color-scheme: dark
+    }
+
+    html {
+      scroll-padding-top: env(safe-area-inset-top, 0px);
+      scroll-behavior: smooth
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: inherit
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.5;
+      overflow-x: hidden
+    }
+
+    #fx,
+    #bg {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 50
+    }
+
+    #bg {
+      z-index: -1
+    }
+
+    section {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 64px 20px;
+      position: relative
+    }
+
+    section:nth-of-type(even)::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background: linear-gradient(180deg, var(--bg), var(--bg2) 50%, var(--bg))
+    }
+
+    h1,
+    h2 {
+      font-family: var(--serif);
+      font-weight: 700;
+      margin: 0;
+      line-height: 1.05
+    }
+
+    h1 {
+      font-size: clamp(46px, 13vw, 128px);
+      font-style: italic;
+      letter-spacing: -.01em
+    }
+
+    h1 span {
+      display: block;
+      color: var(--hot)
+    }
+
+    h2 {
+      font-size: clamp(34px, 8vw, 64px)
+    }
+
+    .hand {
+      font-family: var(--hand);
+      font-size: clamp(22px, 5vw, 34px);
+      color: var(--gold)
+    }
+
+    p {
+      max-width: 34em;
+      margin: 12px auto;
+      color: var(--muted);
+      font-size: clamp(16px, 3.6vw, 19px)
+    }
+
+    .btn {
+      font: 600 18px var(--sans);
+      border: 0;
+      border-radius: 999px;
+      padding: 14px 30px;
+      background: var(--hot);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 8px 24px var(--sh);
+      transition: transform .15s
+    }
+
+    .btn:hover {
+      transform: scale(1.05)
+    }
+
+    .btn:active {
+      transform: scale(.96)
+    }
+
+    .btn:focus-visible,
+    .pol:focus-visible,
+    .env:focus-visible,
+    .cake:focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: 4px
+    }
+
+    /* hero */
+    .date {
+      background: none;
+      border: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      padding: 0;
+      margin-bottom: 8px
+    }
+
+    .date:focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: 6px;
+      border-radius: 12px
+    }
+
+    .num {
+      font: italic 700 clamp(96px, 28vw, 210px)/.85 var(--serif);
+      padding-right: .08em;
+      background: linear-gradient(160deg, var(--gold), var(--hot) 70%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 8px 14px var(--sh));
+      animation: glow 3s ease-in-out infinite
+    }
+
+    .mon {
+      padding-bottom: .35em
+    }
+
+    @keyframes glow {
+      50% {
+        transform: scale(1.04) rotate(-2deg)
+      }
+    }
+
+    #start {
+      margin-top: 18px
+    }
+
+    .hint {
+      margin-top: 34px;
+      color: var(--muted);
+      font-size: 15px;
+      animation: bob 2s ease-in-out infinite
+    }
+
+    @keyframes bob {
+      50% {
+        transform: translateY(8px)
+      }
+    }
+
+    /* letter */
+    .env {
+      position: relative;
+      width: min(300px, 80vw);
+      height: 200px;
+      margin: 120px auto 20px;
+      cursor: pointer;
+      background: none;
+      border: 0;
+      padding: 0
+    }
+
+    .env .bk {
+      position: absolute;
+      inset: 0;
+      border-radius: 8px;
+      background: linear-gradient(rgba(0, 0, 0, .25), rgba(0, 0, 0, .25)), var(--hot);
+      box-shadow: 0 14px 30px var(--sh)
+    }
+
+    .env {
+      transition: height .8s
+    }
+
+    .env .letter {
+      position: absolute;
+      left: 50%;
+      top: 14px;
+      width: 84%;
+      height: 166px;
+      transform: translateX(-50%);
+      border-radius: 4px;
+      z-index: 2;
+      overflow: hidden;
+      background: repeating-linear-gradient(#fffdf6 0 22px, #f0dde0 22px 23px);
+      transition: transform .9s .4s, width .8s, height .8s
+    }
+
+    .env .front {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      background: linear-gradient(rgba(255, 255, 255, .14), rgba(255, 255, 255, .14)), var(--hot);
+      clip-path: polygon(0 100%, 0 28%, 50% 62%, 100% 28%, 100% 100%)
+    }
+
+    .env .flap {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      background: linear-gradient(rgba(0, 0, 0, .2), rgba(0, 0, 0, .2)), var(--hot);
+      clip-path: polygon(0 0, 100% 0, 50% 58%);
+      transform-origin: top;
+      transition: transform .6s, z-index 0s .3s
+    }
+
+    .env .seal {
+      position: absolute;
+      left: 50%;
+      top: 44%;
+      transform: translate(-50%, -50%);
+      font-size: 34px;
+      z-index: 5;
+      transition: opacity .3s;
+      animation: beat 1.3s infinite
+    }
+
+    .env.open .flap {
+      transform: rotateX(180deg);
+      z-index: 1
+    }
+
+    .env.open {
+      cursor: default
+    }
+
+    .env.open .letter {
+      transform: translate(-50%, -70px)
+    }
+
+    .env.pull {
+      height: calc(var(--lh) - 56px)
+    }
+
+    .env.pull .letter {
+      z-index: 6;
+      width: min(520px, 92vw);
+      height: var(--lh);
+      background: #fffdf6;
+      box-shadow: 0 14px 34px var(--sh)
+    }
+
+    .env.open .seal {
+      opacity: 0
+    }
+
+    .txt {
+      width: min(520px, 92vw);
+      padding: 26px 24px;
+      text-align: left;
+      color: #3b1230;
+      font: clamp(21px, 5vw, 28px)/1.45 var(--hand);
+      opacity: 0;
+      transition: opacity .4s .5s
+    }
+
+    .env.pull .txt {
+      opacity: 1
+    }
+
+    .txt .hello {
+      color: var(--hot);
+      font-size: 1.3em;
+      display: block;
+      margin-bottom: 6px
+    }
+
+    .w {
+      opacity: 0;
+      display: inline-block;
+      transform: translateY(6px);
+      animation: wd .5s forwards paused
+    }
+
+    .pull .w {
+      animation-play-state: running
+    }
+
+    @keyframes wd {
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    /* polaroids */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 26px;
+      max-width: 880px;
+      width: 100%;
+      margin-top: 30px
+    }
+
+    .pol {
+      perspective: 900px;
+      aspect-ratio: 4 / 5;
+      background: none;
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+      transform: rotate(var(--r));
+      transition: transform .3s
+    }
+
+    .pol:hover {
+      transform: rotate(0) scale(1.05)
+    }
+
+    .in {
+      position: absolute; inset: 0;
+      width: 100%;
+      height: 100%;
+      transition: transform .7s;
+      transform-style: preserve-3d
+    }
+
+    .pol.flip .in {
+      transform: rotateY(180deg)
+    }
+
+    .f,
+    .b {
+      display: flex; flex-direction: column; position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      background: #fffdf9;
+      border-radius: 6px;
+      padding: 12px 12px 0;
+      box-shadow: 0 12px 26px var(--sh);
+      color: #3b1230
+    }
+
+    .ph {
+      flex: 1; min-height: 0; overflow: hidden;
+      border-radius: 3px;
+      background: linear-gradient(135deg, var(--c1), var(--c2));
+      display: grid;
+      place-items: center;
+      font-size: 44px
+    }
+
+    .cap {
+      font: 22px var(--hand);
+      padding: 6px 0 10px; flex: none; text-align: center
+    }
+
+    .b {
+      transform: rotateY(180deg);
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      font: 24px/1.2 var(--hand);
+      color: var(--hot)
+    }
+
+    .ph img { width: 100%; height: 100%; object-fit: cover; display: block }
+
+    /* reasons */
+    .heart {
+      font-size: 110px;
+      background: none;
+      border: 0;
+      cursor: pointer;
+      filter: drop-shadow(0 10px 18px var(--sh));
+      animation: beat 1.3s infinite;
+      line-height: 1;
+      padding: 0
+    }
+
+    .heart:active {
+      transform: scale(.9)
+    }
+
+    @keyframes beat {
+      15% {
+        transform: scale(1.12)
+      }
+
+      30% {
+        transform: scale(1)
+      }
+
+      45% {
+        transform: scale(1.08)
+      }
+    }
+
+    #reason {
+      min-height: 120px;
+      font: 600 clamp(26px, 6.5vw, 44px)/1.15 var(--serif);
+      font-style: italic;
+      max-width: 18em;
+      margin: 18px auto 6px;
+      transition: opacity .3s
+    }
+
+    /* cake */
+    .cake {
+      position: relative;
+      width: 240px;
+      height: 220px;
+      margin: 30px auto 20px;
+      cursor: pointer;
+      background: none;
+      border: 0;
+      padding: 0
+    }
+
+    .l {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 14px
+    }
+
+    .l1 {
+      bottom: 0;
+      width: 240px;
+      height: 70px;
+      background: var(--hot)
+    }
+
+    .l2 {
+      bottom: 70px;
+      width: 180px;
+      height: 60px;
+      background: #ff8fab
+    }
+
+    .l3 {
+      bottom: 130px;
+      width: 120px;
+      height: 50px;
+      background: var(--gold)
+    }
+
+    .l1::after,
+    .l2::after,
+    .l3::after {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 16px;
+      background: #fff8;
+      border-radius: 14px 14px 40% 40%
+    }
+
+    .cd {
+      position: absolute;
+      bottom: 180px;
+      width: 8px;
+      height: 34px;
+      background: linear-gradient(#fff, #8ad);
+      border-radius: 3px
+    }
+
+    .fl {
+      position: absolute;
+      top: -20px;
+      left: -3px;
+      width: 14px;
+      height: 22px;
+      background: radial-gradient(#fff 10%, #ffc857 45%, #ff6a00);
+      border-radius: 50% 50% 50% 50%/65% 65% 35% 35%;
+      transform-origin: bottom;
+      animation: fl .25s infinite alternate;
+      box-shadow: 0 0 22px 6px #ffb34780;
+      transition: opacity .4s, transform .4s
+    }
+
+    @keyframes fl {
+      to {
+        transform: scale(1.15, .9) rotate(5deg)
+      }
+    }
+
+    .out .fl {
+      opacity: 0;
+      transform: scale(0)
+    }
+
+    .final {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 1s .8s;
+      pointer-events: none;
+      height: 0;
+      overflow: hidden
+    }
+
+    .final.show {
+      opacity: 1;
+      transform: none;
+      height: auto;
+      pointer-events: auto
+    }
+
+    .final h2 {
+      color: var(--hot);
+      font-style: italic
+    }
+
+    .sign {
+      font: clamp(30px, 7vw, 48px) var(--hand);
+      color: var(--gold);
+      margin-top: 14px
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      * {
+        animation: none !important;
+        transition-duration: .01s !important
+      }
+
+      html {
+        scroll-behavior: auto
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="bg" aria-hidden="true"></canvas>
+  <canvas id="fx" aria-hidden="true"></canvas>
+
+  <section id="hero">
+    <button class="date" id="date" aria-label="Запустить салют"><span class="num">16</span><span
+        class="mon hand">ноября</span></button>
+    <h1>С днём рождения,<span>мамочка!</span></h1>
+    <p>Я приготовила для тебя небольшой сюрприз. <br>Нажимай, листай и открывай.</p>
+    <button class="btn" id="start">Открыть сюрприз</button>
+    <div class="hint">листай вниз ↓</div>
+  </section>
+
+  <section id="gift-sec">
+    <h2>Тебе пришло письмо</h2>
+    <p>Оно только для тебя. Открой его.</p>
+    <button class="env" id="gift" aria-label="Открыть письмо">
+      <div class="bk"></div>
+      <div class="letter">
+        <div class="txt" id="tx"><span class="hello">Дорогая мамочка!</span><span id="lt"></span></div>
+      </div>
+      <div class="front"></div>
+      <div class="flap"></div>
+      <div class="seal">❤️</div>
+    </button>
+  </section>
+
+  <section id="photos">
+    <h2>Наши моменты</h2>
+    <p>Нажми на фото, и оно перевернётся.</p>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="reasons">
+    <h2>За что я тебя люблю</h2>
+    <p>Тапай по сердцу.</p>
+    <button class="heart" id="heart" aria-label="Показать причину">❤️</button>
+    <div id="reason" aria-live="polite">Причин очень много. Давай начнём?</div>
+    <div class="hand" id="cnt"></div>
+  </section>
+
+  <section id="cake-sec">
+    <h2>Загадай желание</h2>
+    <p>Нажми на торт, чтобы задуть свечи.</p>
+    <button class="cake" id="cake" aria-label="Задуть свечи">
+      <div class="l l1"></div>
+      <div class="l l2"></div>
+      <div class="l l3"></div>
+      <div id="cds"></div>
+    </button>
+    <div class="final" id="final">
+      <h2>Пусть всё сбудется!</h2>
+      <p>Здоровья, радости, тепла и поводов улыбаться каждый день. Я тебя очень люблю.</p>
+      <div class="sign">Твоя доченька💖</div>
+      <button class="btn" id="again" style="margin-top:20px">Ещё салют!</button>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var c = document.getElementById('fx'), g = c.getContext('2d'), cb = document.getElementById('bg'), b = cb.getContext('2d'), W, H, dpr = Math.min(devicePixelRatio || 1, 2);
+      function rs() {W = innerWidth; H = innerHeight; c.width = cb.width = W * dpr; c.height = cb.height = H * dpr; g.setTransform(dpr, 0, 0, dpr, 0, 0); b.setTransform(dpr, 0, 0, dpr, 0, 0)}
+      rs(); addEventListener('resize', rs);
+      var leafCh = ['✨', '🌸', '⭐', '🌼', '💫', '🌷', '💖'], leaves = [], parts = [];
+      for (var i = 0; i < 22; i++)leaves.push(mk(true));
+      function mk(r) {return {x: Math.random() * W, y: r ? Math.random() * H : H + 30, s: 16 + Math.random() * 18, v: .5 + Math.random() * 1.1, p: Math.random() * 6, a: Math.random() * 6, ch: leafCh[Math.random() * leafCh.length | 0]}}
+      function burst(x, y, n, ch) {
+        for (var i = 0; i < n; i++) {
+          var a = Math.random() * 6.283, s = 2 + Math.random() * 7;
+          parts.push({x: x, y: y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 3, l: 1, t: ch ? ch[i % ch.length] : null, col: 'hsl(' + (Math.random() * 360 | 0) + ',90%,60%)', z: ch ? 16 + Math.random() * 14 : 6 + Math.random() * 5, r: Math.random() * 6})
+        }
+      }
+      function tick() {
+        g.clearRect(0, 0, W, H); b.clearRect(0, 0, W, H);
+        for (var i = 0; i < leaves.length; i++) {
+          var f = leaves[i]; f.y -= f.v; f.p += .02; f.x += Math.sin(f.p) * .8; f.a += .015;
+          if (f.y < -30) {leaves[i] = mk(false); f = leaves[i]}
+          b.save(); b.translate(f.x, f.y); b.rotate(Math.sin(f.a) * .6); b.font = f.s + 'px serif'; b.globalAlpha = .75; b.fillText(f.ch, 0, 0); b.restore()
+        }
+        for (var j = parts.length - 1; j >= 0; j--) {
+          var q = parts[j]; q.x += q.vx; q.y += q.vy; q.vy += .18; q.vx *= .99; q.l -= .012; q.r += .2;
+          if (q.l <= 0) {parts.splice(j, 1); continue}
+          g.save(); g.globalAlpha = Math.min(1, q.l * 1.6); g.translate(q.x, q.y); g.rotate(q.r);
+          if (q.t) {g.font = q.z + 'px serif'; g.fillText(q.t, 0, 0)} else {g.fillStyle = q.col; g.fillRect(-q.z / 2, -q.z / 3, q.z, q.z * .6)} g.restore()
+        }
+        requestAnimationFrame(tick)
+      }
+      tick();
+      function pop(el, n, ch) {var r = el.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, n, ch)}
+
+      /* hero */
+      document.getElementById('date').onclick = function () {salute()};
+      document.getElementById('start').onclick = function () {document.getElementById('gift-sec').scrollIntoView({behavior: 'smooth'})};
+
+      /* letter */
+      var gf = document.getElementById('gift'), tx = document.getElementById('tx'), lt = document.getElementById('lt');
+      var msg = 'Ты самый родной человек на свете. Спасибо за каждое «позвони, как доедешь», за твою заботу и за то, что ты всегда на моей стороне. Всё лучшее во мне — от тебя. С днём рождения! Я тебя очень люблю.'.split(' ');
+      lt.innerHTML = msg.map(function (w, i) {return '<span class="w" style="animation-delay:' + (.7 + i * .14).toFixed(2) + 's">' + w + '</span>'}).join(' ');
+      gf.onclick = function () {
+        if (gf.classList.contains('open')) return; gf.classList.add('open');
+        gf.style.setProperty('--lh', Math.max(300, tx.offsetHeight) + 'px'); 
+        setTimeout(function () {gf.classList.add('pull'); setTimeout(function () {gf.querySelector('.letter').scrollIntoView({behavior: 'smooth', block: 'center'})}, 600)}, 1400)
+      };
+
+      /* photos */
+      var items = [
+        ['photos/1.jpg', 'Милота', 'Мамуль, помнишь этот день?', '65% 50%'],
+        ['photos/2.jpg', 'Наши посиделки', 'Самые вкусные разговоры — с тобой', '50% 50%'],
+        ['photos/3.jpg', 'Вместе', 'С тобой каждый момент в сердце', '50% 55%'],
+        ['photos/4.jpg', 'Праздник', 'Это был лучший день!', '50% 20%'],
+        ['photos/5.jpg', 'Ты красавица', 'Это фото я люблю больше всех', '50% 50%'],
+        ['photos/6.jpg', 'Давным-давно', 'Ты всегда была и будешь моей опорой', '66% 50%']];
+      var gr = document.getElementById('grid');
+      items.forEach(function (it, i) {
+        var b = document.createElement('button'); b.className = 'pol'; b.style.setProperty('--r', (i % 2 ? 3 : -3) + (i % 3) + 'deg');
+        b.setAttribute('aria-label', 'Перевернуть фото: ' + it[1]);
+        b.innerHTML = '<div class="in"><div class="f"><div class="ph"><img src="' + it[0] + '" style="object-position:' + it[3] + '" alt=""></div><div class="cap">' + it[1] + '</div></div><div class="b">' + it[2] + '</div></div>';
+        b.onclick = function () {b.classList.toggle('flip')}; gr.appendChild(b)
+      });
+
+      /* reasons */
+      var rs_ = ['За твои объятия, после которых всё проходит', 'За то, что ты веришь в меня, даже когда я сама не верю', 'За твой смех, он самый заразительный', 'За твою еду, она вкуснее, чем в любом ресторане', 'За мудрые советы, которые я потом признаю', 'За то, что ты рядом в любую минуту', 'За твою доброту ко всем вокруг', 'За то, что ты просто есть'];
+      var k = 0, rE = document.getElementById('reason'), cE = document.getElementById('cnt');
+      document.getElementById('heart').onclick = function (e) {
+        rE.style.opacity = 0; var cur = k;
+        setTimeout(function () {rE.textContent = cur < rs_.length ? rs_[cur] : '…и ещё миллион причин. Я люблю тебя, мама!'; rE.style.opacity = 1}, 200);
+        cE.textContent = cur < rs_.length ? (cur + 1) + ' из ' + rs_.length : 'бесконечность';
+        pop(e.currentTarget, 18, ['❤️', '💕', '💗']); k = cur < rs_.length ? cur + 1 : rs_.length
+      };
+
+      /* cake */
+      var cds = document.getElementById('cds'), cake = document.getElementById('cake'), fin = document.getElementById('final');
+      for (var i = 0; i < 5; i++) {var d = document.createElement('div'); d.className = 'cd'; d.style.left = 'calc(50% + ' + ((i - 2) * 28 - 4) + 'px)'; d.innerHTML = '<div class="fl" style="animation-delay:' + i * .07 + 's"></div>'; cds.appendChild(d)}
+      function salute() {var n = 0, t = setInterval(function () {burst(W * (.15 + Math.random() * .7), H * (.15 + Math.random() * .4), 50); if (++n > 7) clearInterval(t)}, 380)}
+      cake.onclick = function () {
+        if (cake.classList.contains('out')) return; cake.classList.add('out');
+        setTimeout(function () {fin.classList.add('show'); salute(); fin.scrollIntoView({behavior: 'smooth', block: 'center'})}, 500)
+      };
+      document.getElementById('again').onclick = salute;
+    })();
+  </script>
+</body>
+
+</html>
